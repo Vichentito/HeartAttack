@@ -8,7 +8,7 @@ var jwt = require('../services/jwt');
 
 function pruebas(req, res){
 	res.status(200).send({
-		message: 'Probando una acción del controlador de usuarios'
+		message: 'Probando controlador de usuarios perron'
 	});
 }
 
@@ -28,7 +28,7 @@ function saveUser(req, res){
 
 	if(params.password){
 		// Hashear contraseña
-		bcrypt.hash(params.password, 10, null, function(err, hash){
+		bcrypt.hash(params.password, null, null, function(err, hash){
 			user.password = hash
 
 			if(user.name != null && user.userName != null && user.email != null){

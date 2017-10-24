@@ -2,7 +2,7 @@
 
 var mongoose = require('mongoose');
 var app = require('./app');
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 9091;
 
 mongoose.connect('mongodb://localhost:27017/heartattack', (err, res) => {
 	if(err){
