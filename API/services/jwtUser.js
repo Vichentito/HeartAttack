@@ -2,7 +2,7 @@
 
 var jwt = require('jwt-simple');
 var moment = require('moment');
-var secret = 'clave_secreta_curso';
+var secret = 'gatitosconsombrerodecopa';
 
 exports.createTokenUser = function(user){
 	var payload = {
@@ -13,7 +13,7 @@ exports.createTokenUser = function(user){
 		role: user.role,
 		image: user.image,
 		iat: moment().unix(),
-		exp: moment().add(30, 'days').unix
+		exp: moment().add(5, 'days').unix
 	};
 
 	return jwt.encode(payload, secret);

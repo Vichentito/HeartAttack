@@ -3,7 +3,7 @@ var fs = require('fs');
 var path = require('path');
 var bcrypt = require('bcrypt-nodejs');
 var User = require('../models/user');
-var jwt = require('../services/jwt');
+var jwt = require('../services/jwtUser');
 
 
 function pruebas(req, res){
@@ -56,19 +56,19 @@ function saveUser(req, res){
 }
 
 function loginUser(req, res){
-	var params = req.body;
+	var params = req.body
 
-	var email = params.email;
-	var password = params.password;
+	var userName  = params.userName
+	var email = params.email
+	var password = params.password
 
 	User.findOne({email: email.toLowerCase()}, (err, user) => {
 		if(err){
-			res.status(500).send({message: 'Error en la petición'});
+			res.status(500).send({message: 'Error en la petición'})
 		}else{
 			if(!user){
-				res.status(404).send({message: 'El usuario no existe'});
+				res.status(404).send({message: 'El usuario no existe'})
 			}else{
-
 				// Comprobar la contraseña
 				bcrypt.compare(password, user.password, function(err, check){
 					if(check){
@@ -77,14 +77,14 @@ function loginUser(req, res){
 							// devolver un token de jwt
 							res.status(200).send({
 								token: jwt.createTokenUser(user)
-							});
+							})
 						}else{
-							res.status(200).send({user});
+							res.status(200).send({user})
 						}
 					}else{
-						res.status(404).send({message: 'El usuario no ha podido loguease'});
+						res.status(404).send({message: 'El usuario no ha podido loguease'})
 					}
-				});
+				})
 			}
 		}
 	});

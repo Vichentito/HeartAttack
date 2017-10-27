@@ -1,8 +1,11 @@
-'use strict'
+﻿'use strict'
 
 var mongoose = require('mongoose');
 var app = require('./app');
 var port = process.env.PORT || 9091;
+
+//mongodb://root:gatitosconsombrerodecopa@ds229435.mlab.com:29435/heartattack
+//'mongodb://localhost:27017/heartattack
 
 mongoose.connect('mongodb://localhost:27017/heartattack', (err, res) => {
 	if(err){
