@@ -7,6 +7,7 @@ var app = express();
 
 // cargar rutas
 var user_routes = require('./routes/user');
+var root_routes = require('./routes/root');
 
 
 app.use(bodyParser.urlencoded({extended:false}));
@@ -24,6 +25,7 @@ app.use((req, res, next) => {
 
 // rutas base
 app.use('/api', user_routes);
+app.use('/api', root_routes);
 
 
 module.exports = app;

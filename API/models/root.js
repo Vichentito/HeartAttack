@@ -4,9 +4,9 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var RootSchema = Schema({
-		name: 'ROOT',
+		name: String,
 		password: String,
-		role: 'root',
+		role: String,
 		image: String
 });
 
