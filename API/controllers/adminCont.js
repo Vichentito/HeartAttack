@@ -2,8 +2,8 @@
 var fs = require('fs');
 var path = require('path');
 var bcrypt = require('bcrypt-nodejs');
-var AdminUsers = require('../models/AdminUsuarios');
-var jwt = require('../services/jwtAdminUsers');
+var AdminCont = require('../models/adminCont');
+var jwt = require('../services/jwtAdminCont');
 
 
 function pruebas(req, res){
@@ -12,35 +12,35 @@ function pruebas(req, res){
 	});
 }
 
-function saveAdminUsers(req, res){
-	var adminUsers = new AdminUsers()
+function saveAdminCont(req, res){
+	var adminCont = new AdminCont()
 
 	var params = req.body
 
 	console.log(params)
 
-	adminUsers.name = params.name
-	adminUsers.identifier = params.identifier
-	adminUsers.email = params.email
-	adminUsers.state = true
-	adminUsers.role = 'ROLE_ADMIN_USERS'
-	adminUsers.image = 'null'
+	adminCont.name = params.name
+	adminCont.identifier = params.identifier
+	adminCont.email = params.email
+	adminCont.state = true
+	adminCont.role = 'ROLE_ADMIN_CONT'
+	adminCont.image = 'null'
 
 	if(params.password){
 		// Hashear contraseña
 		bcrypt.hash(params.password, null, null, function(err, hash){
-			adminUsers.password = hash
+			adminCont.password = hash
 
-			if(adminUsers.name != null && adminUsers.identifier != null && adminUsers.email != null){
+			if(adminCont.name != null && adminCont.identifier != null && adminCont.email != null){
 				// Guardar el adminUsers
-				adminUsers.save((err, adminUsersStored) => {
+				adminCont.save((err, adminContStored) => {
 					if(err){
-						res.status(500).send({message: 'Error al guardar el adminUsers'})
+						res.status(500).send({message: 'Error al guardar el adminCont'})
 					}else{
-						if(!adminUsersStored){
-							res.status(404).send({message: 'No se ha registrado el adminUsers'})
+						if(!adminContStored){
+							res.status(404).send({message: 'No se ha registrado el adminCont'})
 						}else{
-							res.status(200).send({adminUsers: adminUsersStored})
+							res.status(200).send({adminCont: adminContStored})
 						}
 					}
 				});
@@ -55,18 +55,18 @@ function saveAdminUsers(req, res){
 
 }
 
-function loginAdminUsers(req, res){
+function loginAdminCont(req, res){
 	var params = req.body
 
 	var identifier  = params.identifier
 	var password = params.password
 
-	AdminUsers.findOne({identifier: identifier.toLowerCase()}, (err, adminUsers) => {
+	AdminCont.findOne({identifier: identifier.toLowerCase()}, (err, adminCont) => {
 		if(err){
 			res.status(500).send({message: 'Error en la petición'})
 		}else{
-			if(!adminUsers){
-				res.status(404).send({message: 'El adminUsers no existe'})
+			if(!adminCont){
+				res.status(404).send({message: 'El adminCont no existe'})
 			}else{
 				// Comprobar la contraseña
 				bcrypt.compare(password, user.password, function(err, check){
@@ -75,13 +75,13 @@ function loginAdminUsers(req, res){
 						if(params.gethash){
 							// devolver un token de jwt
 							res.status(200).send({
-								token: jwt.createTokenAdminUsers(adminUsers)
+								token: jwt.createTokenAdminCont(adminCont)
 							})
 						}else{
-							res.status(200).send({adminUsers})
+							res.status(200).send({adminCont})
 						}
 					}else{
-						res.status(404).send({message: 'El adminUsers no ha podido loguease'})
+						res.status(404).send({message: 'El adminCont no ha podido loguease'})
 					}
 				})
 			}
@@ -89,29 +89,29 @@ function loginAdminUsers(req, res){
 	});
 }
 
-function updateAdminUsers(req, res){
-	var adminUsersId = req.params.id
+function updateAdminCont(req, res){
+	var adminContId = req.params.id
 	var update = req.body
 
-	if(adminUsersId != req.adminUsers.sub){
+	if(adminContId != req.adminCont.sub){
 	  return res.status(500).send({message: 'No tienes permiso para actualizar este adminUsers'})
 	}
 
-	AdminUsers.findByIdAndUpdate(adminUsersId, update, (err, adminUsersUpdated) => {
+	AdminCont.findByIdAndUpdate(adminContId, update, (err, adminContUpdated) => {
 		if(err){
-			res.status(500).send({message: 'Error al actualizar el adminUsers'})
+			res.status(500).send({message: 'Error al actualizar el adminCont'})
 		}else{
-			if(!adminUsersUpdated){
-				res.status(404).send({message: 'No se ha podido actualizar el adminUsers'})
+			if(!adminContUpdated){
+				res.status(404).send({message: 'No se ha podido actualizar el adminCont'})
 			}else{
-				res.status(200).send({adminUsers: adminUsersUpdated})
+				res.status(200).send({adminCont: adminContUpdated})
 			}
 		}
 	})
 }
 
 function uploadImage(req, res){
-	var adminUsersId = req.params.id
+	var adminContId = req.params.id
 	var file_name = 'No subido...';
 
 	if(req.files){
@@ -124,11 +124,11 @@ function uploadImage(req, res){
 
 		if(file_ext == 'png' || file_ext == 'jpg' || file_ext == 'gif'){
 
-			AdminUsers.findByIdAndUpdate(adminUsersId, {image: file_name}, (err, adminUsersUpdated) => {
-				if(!adminUsersUpdated){
+			AdminCont.findByIdAndUpdate(adminContId, {image: file_name}, (err, adminContUpdated) => {
+				if(!adminContUpdated){
 					res.status(404).send({message: 'No se ha podido actualizar el adminUsers'})
 				}else{
-					res.status(200).send({image: file_name, adminUsers: adminUsersUpdated})
+					res.status(200).send({image: file_name, adminCont: adminContUpdated})
 				}
 			});
 
@@ -157,9 +157,9 @@ function getImageFile(req, res){
 
 module.exports = {
 	pruebas,
-	saveAdminUsers,
-	loginAdminUsers,
-	updateAdminUsers,
+	saveAdminCont,
+	loginAdminCont,
+	updateAdminCont,
 	uploadImage,
 	getImageFile
 };
