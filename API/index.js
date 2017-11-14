@@ -7,7 +7,7 @@ var port = process.env.PORT || 9091;
 //mongodb://root:gatitosconsombrerodecopa@ds229435.mlab.com:29435/heartattack
 //'mongodb://localhost:27017/heartattack
 
-mongoose.connect('mongodb://localhost:27017/heartattack', (err, res) => {
+mongoose.connect('mongodb://root:gatitosconsombrerodecopa@ds229435.mlab.com:29435/heartattack', (err, res) => {
 	if(err){
 		throw err;
 	}else{
