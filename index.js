@@ -16,8 +16,6 @@ mongoose.connect('mongodb://root:gatitosconsombrerodecopa@ds229435.mlab.com:2943
 		app.listen(port, function(){
 			console.log("Servidor del api en http://localhost:"+port);
 		});
-		app.get('/', (req,res){
-			res.redirect('/api/probando-controlador-users')
-		})
+		
 	}
 });
