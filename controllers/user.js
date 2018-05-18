@@ -19,19 +19,22 @@ function saveUser(req, res){
 
 	console.log(params)
 
-	user.name = params.name
+	user.nombre = params.nombre
 	user.userName = params.userName
 	user.email = params.email
+	user.age = params.age
+	user.psswrdrecover = ""
 	user.state = true
 	user.role = 'ROLE_USER'
-	user.image = 'null'
+	user.puntaje = 0
+
 
 	if(params.password){
 		// Hashear contraseña
 		bcrypt.hash(params.password, null, null, function(err, hash){
 			user.password = hash
 
-			if(user.name != null && user.userName != null && user.email != null){
+			if(user.name != null && user.userName != null && user.email != null && user.age != null){
 				// Guardar el usuario
 				user.save((err, userStored) => {
 					if(err){
