@@ -33,8 +33,9 @@ function saveUser(req, res){
 		// Hashear contraseña
 		bcrypt.hash(params.password, null, null, function(err, hash){
 			user.password = hash
-
-			if(user.name != null ){
+			
+			
+			
 				// Guardar el usuario
 				user.save((err, userStored) => {
 					if(err){
@@ -48,9 +49,7 @@ function saveUser(req, res){
 					}
 				});
 
-			}else{
-			    res.status(200).send({message: 'Rellena todos los campos'})
-			}
+			
 		})
 	}else{
 		res.status(200).send({message: 'Introduce la contraseña'})
