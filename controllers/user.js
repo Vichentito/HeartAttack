@@ -26,7 +26,7 @@ function saveUser(req, res){
 	user.psswrdrecover = ""
 	user.state = true
 	user.role = 'ROLE_USER'
-	user.puntaje = 0
+	user.puntaje = "0"
 
 
 	if(params.password){

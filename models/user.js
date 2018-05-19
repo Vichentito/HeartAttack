@@ -10,7 +10,7 @@ var UserSchema = Schema({
 		password: String,
 		psswrdrecover: String,
 		age: String,
-		puntaje: Number,
+		puntaje: String,
 		state: Boolean,
 		role: String
 });
