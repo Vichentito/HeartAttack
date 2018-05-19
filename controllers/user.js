@@ -181,6 +181,7 @@ module.exports = {
 	saveUser,
 	loginUser,
 	updateUser,
+	scoreUser,
 	uploadImage,
 	getImageFile
 };
