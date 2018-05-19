@@ -19,7 +19,7 @@ function saveUser(req, res){
 
 	console.log(params)
 
-	user.nombre = params.nombre
+	user.nombre = params.name
 	user.userName = params.userName
 	user.email = params.email
 	user.age = params.age
@@ -34,7 +34,7 @@ function saveUser(req, res){
 		bcrypt.hash(params.password, null, null, function(err, hash){
 			user.password = hash
 
-			if(user.nombre != null && user.userName != null && user.email != null && user.age != null){
+			if(user.name != null && user.userName != null && user.email != null && user.age != null){
 				// Guardar el usuario
 				user.save((err, userStored) => {
 					if(err){
@@ -60,8 +60,6 @@ function saveUser(req, res){
 
 function loginUser(req, res){
 	var params = req.body
-
-	var userName  = params.userName
 	var email = params.email
 	var password = params.password
 
@@ -113,6 +111,25 @@ function updateUser(req, res){
 		}
 	})
 }
+
+function scoreUser(req,res){
+	var userId = req.params.id
+	var update = req.body
+
+	User.findByIdAndUpdate(userId, update, (err, userUpdated) => {
+		if(err){
+			res.status(500).send({message: 'Error al actualizar el usuario'})
+		}else{
+			if(!userUpdated){
+				res.status(404).send({message: 'No se ha podido actualizar el usuario'})
+			}else{
+				res.status(200).send({user: userUpdated})
+			}
+		}
+	})
+}
+
+
 
 function uploadImage(req, res){
 	var userId = req.params.id
